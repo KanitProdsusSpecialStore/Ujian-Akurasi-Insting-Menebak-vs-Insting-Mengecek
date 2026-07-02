@@ -3,915 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Manager's Scale: SOP vs Extra Mile</title>
+    <title>Reliability Quest: SOP vs Extra Mile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fdfbf7;
-            --primary: #000000;
-            --accent-blue: #a8c7fa;
-            --accent-pink: #fbcce7;
-            --accent-yellow: #fde047;
-            --accent-green: #6ee7b7;
-            --accent-red: #fca5a5;
-            --sop-color: #cbd5e1;
-            --extra-color: #fbbf24;
-            --border-width: 3px;
-            --shadow-offset: 6px;
-        }
-
-        * {
-            box-sizing: border-box;
-            font-family: 'Space Grotesk', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            --bg-color: #f4f000;
+            --primary: #ff0090;
+            --secondary: #00e5ff;
+            --dark: #111111;
+            --light: #ffffff;
+            --success: #00e676;
+            --error: #ff1744;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--dark);
             overflow-x: hidden;
+            touch-action: pan-y; /* Allow vertical scrolling normally */
         }
 
-        /* --- Neo-Brutalism Utilities --- */
+        /* Neo-Brutalism Utilities */
         .neo-box {
-            background-color: #fff;
-            border: var(--border-width) solid var(--primary);
-            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--primary);
+            background-color: var(--light);
+            border: 4px solid var(--dark);
+            box-shadow: 6px 6px 0px var(--dark);
             border-radius: 8px;
-            transition: transform 0.1s, box-shadow 0.1s;
+            transition: all 0.2s ease;
         }
-
-        .neo-btn {
-            background-color: var(--accent-blue);
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding: 12px 24px;
-            border: var(--border-width) solid var(--primary);
-            box-shadow: 4px 4px 0px var(--primary);
-            border-radius: 8px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.1s;
-        }
-
-        .neo-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px var(--primary);
-        }
-
-        /* --- Layout --- */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        section {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            flex: 1;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        section.active {
-            display: flex;
-        }
-
-        /* --- Audio Toggle --- */
-        .audio-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--accent-yellow);
-            padding: 10px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 2px 2px 0px var(--primary);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-        }
-
-        /* --- Gateway & Briefing --- */
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 10px;
-            line-height: 1.1;
-            background-color: var(--accent-yellow);
-            padding: 10px;
-            border: var(--border-width) solid var(--primary);
-            box-shadow: 4px 4px 0px var(--primary);
-            transform: rotate(-2deg);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
+        
+        .neo-button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: 4px solid var(--dark);
+            box-shadow: 4px 4px 0px var(--dark);
             font-weight: bold;
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.1s ease;
         }
 
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-            border: var(--border-width) solid var(--primary);
+        .neo-button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--dark);
+        }
+
+        .neo-input {
+            border: 4px solid var(--dark);
+            box-shadow: 4px 4px 0px var(--dark);
             border-radius: 8px;
-            box-shadow: 3px 3px 0px var(--primary);
+            padding: 12px;
+            width: 100%;
+            font-family: inherit;
+            font-weight: 600;
             outline: none;
         }
 
-        .form-group input:focus {
-            background-color: #f8fafc;
+        .neo-input:focus {
+            background-color: #f0f8ff;
         }
 
-        .hook-box {
-            background-color: var(--accent-pink);
-            padding: 15px;
-            margin: 20px 0;
-            font-weight: 600;
-        }
-
-        /* --- Game Area --- */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            background: #fff;
-            padding: 10px 15px;
-            z-index: 10;
-        }
-
-        .progress-container {
+        /* Game Specific */
+        .screen {
+            display: none;
+            min-height: 100vh;
             width: 100%;
-            height: 20px;
-            background: #fff;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            position: relative;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .progress-bar {
-            height: 100%;
-            background: var(--accent-green);
-            width: 0%;
-            transition: width 0.3s ease;
-            border-right: 2px solid var(--primary);
+        .screen.active {
+            display: flex;
+        }
+
+        #draggable-card {
+            touch-action: none; /* Prevent scrolling when dragging */
+            user-select: none;
+            cursor: grab;
+            z-index: 100;
+            background-color: white;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
         
-        .progress-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            top: 0;
-            font-size: 0.8rem;
-            font-weight: bold;
-            line-height: 20px;
-        }
-
-        .case-card {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .case-badge {
-            position: absolute;
-            top: -15px;
-            left: -10px;
-            background: var(--accent-blue);
-            padding: 5px 15px;
-            border: 2px solid var(--primary);
-            font-weight: bold;
-            transform: rotate(-5deg);
-        }
-
-        .game-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            min-height: 400px;
-        }
-
-        .solution-card {
-            background-color: var(--primary);
-            color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            cursor: grab;
-            user-select: none;
-            touch-action: none; /* Prevent scrolling when dragging */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-            z-index: 100;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
-            border: 2px solid #fff;
-            transition: transform 0.1s;
-        }
-
-        .solution-card.dragging {
+        #draggable-card:active {
             cursor: grabbing;
-            transition: none; /* Remove transition during drag for smoothness */
-            box-shadow: 12px 12px 0px rgba(0,0,0,0.2);
         }
 
-        .drop-zones {
-            display: flex;
-            gap: 15px;
-            margin-top: auto;
-            margin-bottom: 20px;
-            height: 150px;
+        .drop-zone {
+            transition: transform 0.2s, background-color 0.2s;
         }
 
-        .zone {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 10px;
-            border: 4px dashed var(--primary);
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .zone-sop {
-            background-color: rgba(203, 213, 225, 0.3);
-        }
-
-        .zone-extra {
-            background-color: rgba(251, 191, 36, 0.3);
-        }
-
-        .zone.drag-over {
+        .drop-zone.drag-over {
             transform: scale(1.05);
-            border-style: solid;
-        }
-        .zone-sop.drag-over { background-color: var(--sop-color); }
-        .zone-extra.drag-over { background-color: var(--accent-yellow); }
-
-        /* --- Debrief / Result --- */
-        .result-item {
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #fff;
-        }
-        .result-item.correct { border-left: 8px solid var(--accent-green); }
-        .result-item.incorrect { border-left: 8px solid var(--accent-red); }
-
-        .badges-container {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
-        .badge {
-            background: var(--accent-yellow);
-            padding: 10px 15px;
-            border: 2px solid var(--primary);
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            box-shadow: 2px 2px 0px var(--primary);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Patterns */
+        .bg-pattern {
+            background-image: radial-gradient(var(--dark) 10%, transparent 11%), radial-gradient(var(--dark) 10%, transparent 11%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-attachment: fixed;
+            background-color: var(--bg-color);
         }
 
-        /* --- Visual Feedback Overlay --- */
         .feedback-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            display: flex;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 200;
+            display: none;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 24px;
+            background: white;
+            border: 3px solid black;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-right: 3px solid black;
+        }
+
+        .badge-icon {
             font-size: 4rem;
-            font-weight: 900;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .feedback-overlay.show-correct {
-            opacity: 1;
-            background: rgba(110, 231, 183, 0.8);
-            color: #065f46;
+            margin-bottom: 1rem;
+            animation: bounce 1s infinite alternate;
         }
 
-        .feedback-overlay.show-incorrect {
-            opacity: 1;
-            background: rgba(252, 165, 165, 0.8);
-            color: #991b1b;
-        }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border-top: 2px solid var(--primary);
-            background: #fff;
-            margin-top: auto;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
-
-        /* Hint/Story Styling */
-        .story-text {
-            font-style: italic;
-            color: #475569;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
     </style>
 </head>
-<body>
+<body class="bg-pattern min-h-screen">
 
-<div class="audio-toggle" id="audioToggle" onclick="toggleAudio()">🔇</div>
+    <!-- AUDIO TOGGLE -->
+    <button id="mute-btn" class="fixed top-4 right-4 neo-box p-2 z-50 bg-white cursor-pointer" onclick="toggleAudio()">
+        🔊
+    </button>
 
-<div class="container">
-    <!-- GATEWAY SECTION -->
-    <section id="gateway" class="active">
-        <h1 class="hero-title">The Manager's<br>Scale</h1>
-        
-        <div class="neo-box" style="padding: 30px; margin-top: 30px;">
-            <div class="hook-box neo-box" style="transform: rotate(1deg);">
-                "Menyelesaikan masalah saja tidak cukup. Dibutuhkan 'Emas' untuk memulihkan kepercayaan yang rusak."<br><br>
-                Mampukah Anda menemukan +1 (The Extra Mile) di setiap krisis operasional?
-            </div>
+    <!-- SCREEN 1: GATEWAY (LOGIN) -->
+    <div id="screen-login" class="screen active justify-center">
+        <div class="neo-box p-8 max-w-md w-full bg-white text-center">
+            <h1 class="text-4xl font-bold mb-2 uppercase text-pink-600" style="text-shadow: 2px 2px 0 #000;">Reliability Quest</h1>
+            <h2 class="text-xl font-bold mb-6 bg-yellow-300 inline-block px-2 border-2 border-black">SOP vs Extra Mile</h2>
             
-            <div class="form-group">
-                <label for="playerName">Nama Lengkap</label>
-                <input type="text" id="playerName" placeholder="Ketik nama Anda...">
-            </div>
-            <div class="form-group">
-                <label for="playerNIK">NIK / ID Karyawan</label>
-                <input type="text" id="playerNIK" placeholder="Ketik NIK Anda...">
-            </div>
-            <button class="neo-btn" style="width: 100%; margin-top: 10px;" onclick="goToBriefing()">Lanjut ke Briefing ➔</button>
-        </div>
-    </section>
-
-    <!-- BRIEFING SECTION -->
-    <section id="briefing">
-        <h2 class="hero-title" style="font-size: 1.8rem; background-color: var(--accent-blue);">Mission Briefing</h2>
-        
-        <div class="neo-box" style="padding: 20px; margin-top: 20px;">
-            <p>Halo, <strong><span id="display-name">Manager</span></strong>.</p>
-            <p>Dalam <em>Service Recovery Paradox</em>, pelanggan yang mengalami masalah lalu ditangani dengan <strong>LUAR BIASA</strong>, akan menjadi lebih loyal dibandingkan jika tidak ada masalah sama sekali.</p>
-            <p>Ini seperti filosofi <strong>Kintsugi</strong> dari Jepang: Memperbaiki tembikar pecah dengan emas, membuatnya lebih berharga dari aslinya.</p>
+            <p class="text-sm font-semibold mb-6 text-gray-700">Selamat datang, Wajah Pelayanan Prima!</p>
             
-            <div class="hook-box neo-box" style="background-color: #f1f5f9;">
-                <strong>Misi Anda:</strong><br>
-                Di hadapan Anda ada 10 skenario krisis kantor. Tarik (Drag) kartu Solusi ke keranjang yang tepat:
-                <ul style="padding-left: 20px;">
-                    <li>📦 <strong>SOP / Impas (0)</strong>: Solusi standar, sekadar kembali normal.</li>
-                    <li>🌟 <strong>Extra Mile (+1)</strong>: Ada kejutan positif, kompensasi ekstra (Emas Kintsugi).</li>
-                </ul>
-            </div>
-            
-            <button class="neo-btn" style="width: 100%; background-color: var(--accent-green);" onclick="startGame()">SAYA SIAP MEMULAI ➔</button>
-        </div>
-    </section>
-
-    <!-- CORE GAME SECTION -->
-    <section id="core-game">
-        <div class="top-bar neo-box">
-            <div><strong>Skor: <span id="score">0</span></strong></div>
-            <div><strong>Level: SPV</strong></div>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-            <div class="progress-text"><span id="progress-text">0</span>% Complete</div>
-        </div>
-
-        <div class="case-card neo-box">
-            <div class="case-badge">Kasus #<span id="case-number">1</span></div>
-            <div class="story-text" id="case-context">Memuat konteks...</div>
-            <strong style="font-size: 1.2rem; line-height: 1.4;" id="case-text">Memuat masalah...</strong>
-        </div>
-
-        <div class="game-area" id="game-area">
-            <div class="drop-zones">
-                <div class="zone zone-sop neo-box" id="zone-sop">
-                    📦<br>SOP / Impas (0)
+            <div class="space-y-4 mb-8 text-left">
+                <div>
+                    <label class="block font-bold mb-1">Nama Lengkap</label>
+                    <input type="text" id="player-name" class="neo-input" placeholder="Ketik nama Anda...">
                 </div>
-                <div class="zone zone-extra neo-box" id="zone-extra">
-                    🌟<br>Extra Mile (+1)
+                <div>
+                    <label class="block font-bold mb-1">NIK (Nomor Induk Karyawan)</label>
+                    <input type="text" id="player-nik" class="neo-input" placeholder="Contoh: 1029384">
                 </div>
             </div>
 
-            <!-- Draggable Element -->
-            <div class="solution-card" id="solution-card">
-                Memuat solusi...
-            </div>
+            <button onclick="goToBriefing()" class="neo-button w-full py-4 text-xl">Masuk ke Portal</button>
         </div>
-    </section>
+        <div class="mt-8 font-bold text-sm bg-white px-4 py-1 border-2 border-black rounded-full shadow-[2px_2px_0px_#000]">
+            Education & Training Dept. &copy; 2026
+        </div>
+    </div>
 
-    <!-- DEBRIEF / RESULT SECTION -->
-    <section id="debrief">
-        <h1 class="hero-title" style="font-size: 2rem; background-color: var(--accent-green);">Performance Review</h1>
-        
-        <div class="neo-box" style="padding: 20px; margin-top: 20px; text-align: center;">
-            <h2>Skor Akhir: <span id="final-score" style="font-size: 2.5rem; color: var(--accent-blue);">0</span>/100</h2>
-            <p id="reinforcement-msg" style="font-weight: bold; font-size: 1.1rem;"></p>
+    <!-- SCREEN 2: MISSION BRIEFING -->
+    <div id="screen-briefing" class="screen justify-center">
+        <div class="neo-box p-6 max-w-lg w-full bg-[#00e5ff]">
+            <h2 class="text-3xl font-bold mb-4 uppercase border-b-4 border-black pb-2">Mission Briefing</h2>
             
-            <div class="badges-container" id="badges-container">
-                <!-- Badges injected here -->
+            <div class="bg-white border-2 border-black p-4 mb-4 font-semibold text-sm leading-relaxed rounded">
+                <p class="mb-2">Sebagai garda depan, Anda adalah representasi perusahaan. <strong>Pelayanan prima (Reliability) tidak diukur dari seberapa cepat Anda menjawab, melainkan seberapa konsisten dan akurat layanan tersebut sesuai standar (SOP).</strong></p>
+                <p>Jangan gengsi untuk merujuk pada standar! Melalui langkah interaksi <strong>A-C-E</strong> yang smooth, mari uji refleks pengambilan keputusan Anda.</p>
+            </div>
+
+            <h3 class="font-bold text-xl mb-2 bg-pink-500 text-white inline-block px-2 border-2 border-black">MISI ANDA</h3>
+            <p class="font-semibold mb-4 text-sm bg-white p-2 border-2 border-black">
+                Di hadapan Anda ada 10 skenario pelanggan. <strong>Pisahkan</strong> mana solusi yang merupakan ketetapan <strong>SOP (Akurat & Konsisten)</strong> dan mana yang merupakan inisiatif <strong>Ekstra Mile (Tindakan di luar standar wajib).</strong>
+            </p>
+
+            <h3 class="font-bold text-xl mb-2 bg-yellow-400 inline-block px-2 border-2 border-black">CARA BERMAIN</h3>
+            <ul class="font-semibold mb-6 text-sm list-disc pl-5 bg-white p-2 border-2 border-black">
+                <li>Baca kartu masalah & solusi yang muncul.</li>
+                <li><strong>Tarik (Drag)</strong> kartu tersebut.</li>
+                <li><strong>Lepaskan (Drop)</strong> ke keranjang SOP atau Ekstra Mile.</li>
+            </ul>
+
+            <button onclick="startGame()" class="neo-button w-full py-4 text-xl bg-pink-600 hover:bg-pink-700">SAYA SIAP MEMULAI!</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: CORE EXECUTION (GAMEPLAY) -->
+    <div id="screen-game" class="screen">
+        
+        <!-- Header: Stats -->
+        <div class="w-full max-w-md flex justify-between items-center bg-white neo-box p-3 mb-4 mt-12">
+            <div class="font-bold">Skor: <span id="score-display" class="text-pink-600 text-xl">0</span></div>
+            <div class="text-right">
+                <div class="font-bold text-sm mb-1">Misi: <span id="progress-text">1/10</span></div>
+                <div class="progress-bar-container w-32">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
+                </div>
             </div>
         </div>
 
-        <h3 style="margin-top: 30px;">Feedback Analisis Keputusan:</h3>
-        <div id="results-list">
-            <!-- Results injected here -->
+        <!-- Gameplay Area -->
+        <div class="w-full max-w-md flex flex-col flex-grow relative items-center justify-center gap-6">
+            
+            <!-- Draggable Card -->
+            <div id="draggable-card" class="neo-box p-5 w-full text-center relative bg-yellow-100 touch-none">
+                <div class="text-xs font-bold bg-black text-white px-2 py-1 absolute -top-3 left-1/2 transform -translate-x-1/2 rounded border-2 border-black">Skenario</div>
+                <p id="card-scenario" class="font-bold text-lg mb-3 mt-2 text-gray-800">Pelanggan mengklaim promo yang sudah expired.</p>
+                
+                <div class="bg-blue-100 border-2 border-blue-800 p-3 rounded">
+                    <div class="text-xs font-bold text-blue-800 mb-1">TINDAKAN ANDA:</div>
+                    <p id="card-solution" class="font-bold text-blue-900">Menolak dengan halus dan menjelaskan syarat & ketentuan promo yang berlaku saat ini.</p>
+                </div>
+                <div class="mt-4 text-xs font-bold text-gray-500 animate-pulse">(Tarik kartu ini ke bawah)</div>
+            </div>
+
+            <!-- Drop Zones -->
+            <div class="flex w-full gap-4 mt-auto mb-8">
+                <div class="drop-zone neo-box flex-1 flex flex-col items-center justify-center p-4 bg-pink-100 border-pink-600" data-type="SOP">
+                    <div class="text-3xl mb-2">📋</div>
+                    <h3 class="font-bold text-center text-pink-700">Keranjang<br>SOP</h3>
+                    <p class="text-[10px] text-center font-semibold mt-1 leading-tight text-pink-800">(Standar Wajib & Akurat)</p>
+                </div>
+                <div class="drop-zone neo-box flex-1 flex flex-col items-center justify-center p-4 bg-cyan-100 border-cyan-600" data-type="Extra Mile">
+                    <div class="text-3xl mb-2">✨</div>
+                    <h3 class="font-bold text-center text-cyan-700">Keranjang<br>Ekstra Mile</h3>
+                    <p class="text-[10px] text-center font-semibold mt-1 leading-tight text-cyan-800">(Inisiatif di Luar Standar)</p>
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <button class="neo-btn" style="width: 100%; margin: 30px 0;" onclick="location.reload()">Selesaikan & Kembali</button>
-    </section>
-</div>
+    <!-- SCREEN 4: POST-ACTION DEBRIEF -->
+    <div id="screen-result" class="screen bg-white">
+        <div class="max-w-2xl w-full neo-box p-6 bg-yellow-50 my-8">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold uppercase mb-2">Laporan Misi Selesai</h2>
+                <div class="inline-block bg-black text-white px-4 py-1 font-bold rounded-full mb-4" id="result-name">Nama - NIK</div>
+                
+                <div id="badge-container" class="mt-4">
+                    <div id="badge-icon" class="badge-icon">🏆</div>
+                    <h3 id="badge-title" class="text-2xl font-bold text-pink-600 bg-white border-2 border-black inline-block px-4 py-1">SOP MASTER</h3>
+                    <p id="badge-desc" class="font-semibold mt-2 text-gray-700">Luar biasa! Refleks dan akurasi Anda dalam standar operasional sangat tajam.</p>
+                </div>
 
-<footer>
-    Education & Training Dept. &copy; 2026<br>
-    <span style="font-size: 0.8rem; font-weight: normal;">Gamifikasi Pembelajaran - The +1 Principle</span>
-</footer>
+                <div class="mt-6 flex justify-center gap-4">
+                    <div class="neo-box bg-white p-3 text-center border-blue-500">
+                        <div class="text-sm font-bold">Skor Akhir</div>
+                        <div id="final-score" class="text-3xl font-bold text-blue-600">1000</div>
+                    </div>
+                    <div class="neo-box bg-white p-3 text-center border-green-500">
+                        <div class="text-sm font-bold">Akurasi</div>
+                        <div id="final-accuracy" class="text-3xl font-bold text-green-600">100%</div>
+                    </div>
+                </div>
+            </div>
 
-<!-- Visual Feedback Overlays -->
-<div class="feedback-overlay" id="feedback-overlay">BENAR!</div>
+            <h3 class="font-bold text-xl mb-4 bg-black text-white inline-block px-2">DEBRIEFING AREA</h3>
+            <div id="feedback-list" class="space-y-4">
+                <!-- Feedback items will be injected here -->
+            </div>
 
-<script>
-    // --- 1. DATA SOAL GAMIFIKASI ---
-    // Teori: Service Recovery Paradox & Kintsugi (The +1 Principle)
-    const questions = [
-        {
-            context: "Pagi hari yang sibuk. Klien VIP menelepon dengan nada tinggi.",
-            kasus: "Klien menerima draft kontrak yang salah cetak dan kehilangan 1 jam waktunya untuk membaca dokumen yang salah.",
-            solusi: "Meminta maaf dengan sopan dan segera mengirimkan draft dokumen yang benar via email saat itu juga.",
-            tipe: "sop", // Impas
-            penjelasan: "Hanya mengembalikan ke titik 0. Waktu klien yang terbuang 1 jam tidak digantikan oleh apapun. Ini standar operasi (Impas)."
-        },
-        {
-            context: "Sistem server internal mendadak down saat masa closing bulanan.",
-            kasus: "Tim administrasi panik dan stres karena tidak bisa bekerja, padahal deadline sangat mepet.",
-            solusi: "Menghubungi tim IT, lalu membelikan kopi/camilan ringan untuk tim admin dan meminta perpanjangan waktu deadline ke pusat.",
-            tipe: "extra", // +1
-            penjelasan: "Kintsugi! Selain lapor IT (SOP), Anda memberi 'Emas' berupa empati (kopi) dan rasa aman (renegosiasi deadline)."
-        },
-        {
-            context: "Meeting penting dengan Vendor.",
-            kasus: "Ruang meeting yang sudah Anda booking ternyata dipakai oleh divisi lain secara sepihak.",
-            solusi: "Mengalah, meminta maaf pada vendor, dan memindahkan meeting ke ruang kosong lain di lantai bawah.",
-            tipe: "sop",
-            penjelasan: "Penyelesaian standar. Masalah selesai, tapi tidak ada nilai tambah emosional yang diberikan kepada pihak yang dirugikan."
-        },
-        {
-            context: "Kesalahan pengiriman barang.",
-            kasus: "Barang sampel terlambat sampai 2 hari ke kantor klien potensial.",
-            solusi: "Kirim ulang barang via kurir kilat, gratis ongkir, dan selipkan kartu permohonan maaf tulisan tangan beserta voucher diskon 15%.",
-            tipe: "extra",
-            penjelasan: "Service Recovery Paradox tercapai. Kompensasi (diskon) & sentuhan personal (tulisan tangan) membuat klien lebih terkesan dibanding jika barang datang tepat waktu tanpa interaksi."
-        },
-        {
-            context: "Komplain dari staf Anda sendiri.",
-            kasus: "Seorang staf mengeluh AC di kubikelnya mati sejak kemarin sehingga dia tidak fokus kerja.",
-            solusi: "Membuat tiket keluhan ke tim GA/Maintenance dan menyuruh staf tersebut bersabar menunggu teknisi datang.",
-            tipe: "sop",
-            penjelasan: "Reaktif dan normatif. Anda tidak proaktif mencarikan solusi sementara (seperti meminjamkan kipas atau memindahkannya sementara)."
-        },
-        {
-            context: "Krisis kepercayaan akibat human error.",
-            kasus: "Anggota tim Anda salah mengirim data sensitif ke klien B (seharusnya ke klien A). Klien A marah karena privasinya terancam.",
-            solusi: "Menarik email, meminta maaf secara langsung ke kantor Klien A, dan mempresentasikan sistem verifikasi ganda (SOP baru) agar ini mustahil terulang.",
-            tipe: "extra",
-            penjelasan: "Membawa solusi preventif jangka panjang ke hadapan klien adalah The +1 Principle. Ini memulihkan rasa aman secara permanen."
-        },
-        {
-            context: "Fasilitas rusak saat momen krusial.",
-            kasus: "Proyektor mati total di tengah presentasi pitch proyek miliaran rupiah di kantor Anda.",
-            solusi: "Segera mencetak materi presentasi (print-out) dan membagikannya ke peserta agar meeting tetap bisa berjalan.",
-            tipe: "sop",
-            penjelasan: "Ini adaptasi standar (Plan B). Untuk menjadi +1, mungkin Anda bisa memberikan free lunch atau memindahkan meeting ke restoran bagus."
-        },
-        {
-            context: "Review buruk di media sosial.",
-            kasus: "Pelanggan menulis keluhan panjang di Twitter tentang kasir yang sangat jutek.",
-            solusi: "Membalas tweet tersebut secara publik, meminta maaf, memberikan DM berisi voucher belanja gratis, dan mengundang pelanggan untuk melihat langsung perubahan pelayanan.",
-            tipe: "extra",
-            penjelasan: "Mengubah Hater menjadi Promoter (Service Recovery Paradox). Tidak sekadar membalas 'Terima kasih atas masukannya'."
-        },
-        {
-            context: "Bug pada sistem klien.",
-            kasus: "Aplikasi klien error setelah update dari tim Anda, menyebabkan data transaksi mereka hari itu hilang.",
-            solusi: "Melemburkan tim untuk melakukan restore database dari backup, lalu mengabari klien bahwa sistem sudah kembali normal.",
-            tipe: "sop",
-            penjelasan: "Ini kewajiban mutlak (Baseline). Tidak ada kompensasi atas kepanikan klien. Dibutuhkan 'Gold' tambahan seperti free maintenance 1 bulan."
-        },
-        {
-            context: "Janji SLA (Service Level Agreement) terlanggar.",
-            kasus: "Anda berjanji merespons email dalam 1x24 jam, namun terlewat menjadi 3x24 jam karena Anda sakit.",
-            solusi: "Membalas email lengkap dengan solusi yang diminta, menjelaskan dengan jujur kondisi Anda, dan memberikan template gratis pekerjaan terkait untuk mempermudah klien.",
-            tipe: "extra",
-            penjelasan: "Memberikan 'Template Gratis' adalah Extra Mile (+1) yang menutupi kesalahan dan memberikan surprise positive value (Kintsugi)."
-        }
-    ];
+            <button onclick="location.reload()" class="neo-button w-full py-4 text-xl mt-8">Mainkan Ulang</button>
+        </div>
+    </div>
 
-    // --- 2. STATE MANAGEMENT ---
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let correctAnswersCount = 0;
-    let player = { name: "", nik: "" };
-    let playerAnswers = []; // Simpan history jawaban
-    let isAudioEnabled = false;
+    <!-- Feedback Overlay (Popup) -->
+    <div id="feedback-overlay" class="feedback-overlay">
+        <div class="neo-box bg-white p-6 max-w-sm w-[90%] text-center">
+            <h2 id="feedback-title" class="text-3xl font-bold mb-2">BENAR!</h2>
+            <p id="feedback-message" class="font-semibold mb-4 text-gray-700 text-sm">Feedback text goes here.</p>
+            <button onclick="nextQuestion()" class="neo-button px-6 py-2">Lanjut</button>
+        </div>
+    </div>
 
-    // --- 3. AUDIO SYSTEM (WEB AUDIO API) ---
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    let audioCtx;
-    let bgmOscillators = [];
-    let bgmInterval;
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA SCENARIOS ---
+        const gameData = [
+            {
+                scenario: "Produk makanan yang diterima pelanggan kurang fresh.",
+                solution: "Meminta maaf dan langsung mengganti dengan produk baru.",
+                type: "SOP",
+                feedback: "Sesuai SOP, kualitas adalah janji. Mengganti produk tanpa berdebat adalah langkah wajib, bukan inisiatif opsional."
+            },
+            {
+                scenario: "Pelanggan bertanya tentang detail komposisi alergen.",
+                solution: "Mengecek buku panduan alergen sebelum menjawab agar 100% akurat.",
+                type: "SOP",
+                feedback: "Tidak ada ruang untuk menebak urusan kesehatan pelanggan. Mengecek SOP (buku panduan) adalah wujud keandalan (Reliability) sejati."
+            },
+            {
+                scenario: "Antrean sangat panjang dan pelanggan terlihat terburu-buru.",
+                solution: "Tetap melakukan tahapan sapaan A-C-E secara ringkas dan standar.",
+                type: "SOP",
+                feedback: "SOP A-C-E dirancang untuk semua situasi. Di saat ramai, sapaan standar yang ringkas dan ramah tetap wajib dilakukan."
+            },
+            {
+                scenario: "Sistem kasir sedang error saat transaksi.",
+                solution: "Menginformasikan kendala dengan sopan dan meminta waktu untuk merestart sistem sesuai panduan.",
+                type: "SOP",
+                feedback: "Mengikuti panduan troubleshooting sambil berkomunikasi dengan sopan adalah standar profesional yang tertuang dalam SOP."
+            },
+            {
+                scenario: "Pelanggan mengklaim promo yang sudah expired.",
+                solution: "Menolak dengan halus dan menjelaskan syarat & ketentuan promo yang berlaku saat ini.",
+                type: "SOP",
+                feedback: "Ketegasan menjalankan aturan promosi adalah SOP. Pelayanan prima bukan berarti mengiyakan semua, tapi menolak dengan etika."
+            },
+            {
+                scenario: "Pelanggan kehujanan saat baru tiba di depan pintu outlet.",
+                solution: "Berinisiatif meminjamkan payung pribadi milik staf.",
+                type: "Extra Mile",
+                feedback: "Ini adalah Extra Mile! SOP tidak mewajibkan menggunakan barang pribadi, tetapi empati Anda menciptakan momen WOW!"
+            },
+            {
+                scenario: "Pelanggan kebingungan membawa banyak barang bawaan.",
+                solution: "Menawarkan diri membantu membawakan barang hingga ke kendaraan pelanggan.",
+                type: "Extra Mile",
+                feedback: "Extra Mile sejati! Meninggalkan area kerja sejenak demi membantu beban pelanggan adalah inisiatif empati yang luar biasa."
+            },
+            {
+                scenario: "Mengetahui pelanggan setia sedang berulang tahun hari ini.",
+                solution: "Menuliskan ucapan selamat ulang tahun secara personal di cup atau packaging pesanannya.",
+                type: "Extra Mile",
+                feedback: "Sentuhan personal di luar standar (Extra Mile). Hal kecil ini yang membuat pelanggan merasa sangat dihargai."
+            },
+            {
+                scenario: "Pelanggan bertanya lokasi toilet umum di luar area toko.",
+                solution: "Mengantarkan pelanggan langsung berjalan hingga ke depan pintu toilet tersebut.",
+                type: "Extra Mile",
+                feedback: "SOP mungkin hanya mengarahkan dengan telunjuk, tapi mengantar mereka langsung adalah Extra Mile yang tulus."
+            },
+            {
+                scenario: "Pelanggan lansia kesulitan membaca menu karena tulisan kecil.",
+                solution: "Membacakan seluruh menu favorit satu per satu dengan sabar di meja pelanggan.",
+                type: "Extra Mile",
+                feedback: "Meluangkan waktu lebih untuk menjadi 'mata' bagi pelanggan lansia adalah tindakan Extra Mile yang melampaui standar layanan biasa."
+            }
+        ];
 
-    function initAudio() {
-        if(!audioCtx) audioCtx = new AudioContext();
-        if(audioCtx.state === 'suspended') audioCtx.resume();
-    }
+        // --- GAME STATE ---
+        let player = { name: '', nik: '' };
+        let currentQuestion = 0;
+        let score = 0;
+        let answersData = []; // To store player answers for debrief
+        let isAudioMuted = false;
 
-    function toggleAudio() {
-        isAudioEnabled = !isAudioEnabled;
-        const btn = document.getElementById('audioToggle');
-        if (isAudioEnabled) {
-            btn.innerText = "🔊";
-            initAudio();
-            playBGM();
-        } else {
-            btn.innerText = "🔇";
-            stopBGM();
-        }
-    }
+        // Shuffle questions
+        const shuffledQuestions = gameData.sort(() => 0.5 - Math.random());
 
-    // Synthwave/Lo-fi arpeggiator Generator
-    function playBGM() {
-        if(!isAudioEnabled || !audioCtx) return;
-        const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
+        // --- AUDIO ENGINE (Web Audio API Synthesizer) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let bgmOscillator = null;
+        let bgmGain = null;
+        let bgmInterval = null;
+
+        const synthNotes = [261.63, 329.63, 392.00, 523.25]; // C E G C (Gen Z chill lo-fi vibe)
         let noteIndex = 0;
-        
-        bgmInterval = setInterval(() => {
-            if(!isAudioEnabled) return;
+
+        function playTone(freq, type, duration, volLevel = 0.1) {
+            if (isAudioMuted || audioCtx.state === 'suspended') return;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(notes[noteIndex], audioCtx.currentTime);
-            
-            // Envelope (Soft Attack, long Release for Lo-fi feel)
-            gain.gain.setValueAtTime(0, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0);
-            
+            gain.gain.setValueAtTime(volLevel, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            
             osc.start();
-            osc.stop(audioCtx.currentTime + 1.0);
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function startBGM() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (bgmInterval) clearInterval(bgmInterval);
             
-            noteIndex = (noteIndex + 1) % notes.length;
-            // Chord progression change simulation every 16 notes
-            if(Math.random() < 0.05) notes.reverse(); 
-        }, 300); // 300ms per note
-    }
-
-    function stopBGM() {
-        clearInterval(bgmInterval);
-    }
-
-    function playSFX(type) {
-        if(!isAudioEnabled || !audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        if (type === 'correct') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
-            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // A5
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.5);
-        } else if (type === 'incorrect') {
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200, audioCtx.currentTime); 
-            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.3); 
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-        } else if (type === 'drop') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-        }
-    }
-
-    // --- 4. GAME FLOW LOGIC ---
-    function switchSection(sectionId) {
-        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    function goToBriefing() {
-        const nameInput = document.getElementById('playerName').value.trim();
-        const nikInput = document.getElementById('playerNIK').value.trim();
-        
-        if(!nameInput || !nikInput) {
-            alert("Mohon isi Nama dan NIK Anda.");
-            return;
-        }
-        
-        player.name = nameInput;
-        player.nik = nikInput;
-        document.getElementById('display-name').innerText = player.name;
-        
-        // Init Audio context on first user interaction
-        if(isAudioEnabled) initAudio();
-        
-        switchSection('briefing');
-    }
-
-    function startGame() {
-        switchSection('core-game');
-        currentQuestionIndex = 0;
-        score = 0;
-        correctAnswersCount = 0;
-        playerAnswers = [];
-        loadQuestion();
-    }
-
-    function loadQuestion() {
-        if (currentQuestionIndex >= questions.length) {
-            showDebrief();
-            return;
+            bgmInterval = setInterval(() => {
+                if(!isAudioMuted) {
+                    playTone(synthNotes[noteIndex], 'sine', 0.5, 0.05);
+                    noteIndex = (noteIndex + 1) % synthNotes.length;
+                    
+                    // Bass pulse
+                    if(noteIndex % 2 === 0) playTone(130.81, 'triangle', 0.3, 0.05); 
+                }
+            }, 400); // 150 BPM
         }
 
-        const q = questions[currentQuestionIndex];
-        document.getElementById('case-number').innerText = currentQuestionIndex + 1;
-        document.getElementById('case-context').innerText = q.context;
-        document.getElementById('case-text').innerText = q.kasus;
-        
-        const card = document.getElementById('solution-card');
-        card.innerText = q.solusi;
-        
-        // Reset Card Position
-        card.style.left = '50%';
-        card.style.top = '50%';
-        card.style.transform = 'translate(-50%, -50%)';
-        
-        // Update Progress
-        const percent = Math.round((currentQuestionIndex / questions.length) * 100);
-        document.getElementById('progress-bar').style.width = percent + '%';
-        document.getElementById('progress-text').innerText = percent;
-    }
-
-    // --- 5. DRAG AND DROP (POINTER EVENTS FOR MOBILE & PC) ---
-    const card = document.getElementById('solution-card');
-    const gameArea = document.getElementById('game-area');
-    let isDragging = false;
-    let startX, startY, initialX, initialY;
-
-    card.addEventListener('pointerdown', (e) => {
-        isDragging = true;
-        card.classList.add('dragging');
-        
-        // Setup initial pointer positions
-        startX = e.clientX;
-        startY = e.clientY;
-        
-        // Get current transform translate values or set to current visual position
-        const rect = card.getBoundingClientRect();
-        const areaRect = gameArea.getBoundingClientRect();
-        
-        initialX = rect.left - areaRect.left + (rect.width/2);
-        initialY = rect.top - areaRect.top + (rect.height/2);
-
-        // Change positioning strategy during drag to follow pointer exactly within relative area
-        card.style.transform = `translate(-50%, -50%)`;
-        card.style.left = `${initialX}px`;
-        card.style.top = `${initialY}px`;
-        
-        card.setPointerCapture(e.pointerId);
-    });
-
-    card.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        
-        const currentX = e.clientX;
-        const currentY = e.clientY;
-        
-        const diffX = currentX - startX;
-        const diffY = currentY - startY;
-        
-        card.style.left = `${initialX + diffX}px`;
-        card.style.top = `${initialY + diffY}px`;
-
-        // Check Highlight Overlap
-        checkHoverDropZones(e.clientX, e.clientY);
-    });
-
-    card.addEventListener('pointerup', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        card.classList.remove('dragging');
-        card.releasePointerCapture(e.pointerId);
-
-        // Remove highlights
-        document.querySelectorAll('.zone').forEach(z => z.classList.remove('drag-over'));
-        playSFX('drop');
-
-        // Check if dropped inside a zone
-        const dropType = getDropZone(e.clientX, e.clientY);
-        
-        if (dropType) {
-            processAnswer(dropType);
-        } else {
-            // Snap back to center if not dropped in zone
-            card.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            card.style.left = '50%';
-            card.style.top = '50%';
-            setTimeout(() => { card.style.transition = ''; }, 300);
+        function playCorrectSFX() {
+            playTone(880, 'sine', 0.1, 0.2); // A5
+            setTimeout(() => playTone(1108.73, 'sine', 0.3, 0.2), 100); // C#6
         }
-    });
 
-    function checkHoverDropZones(x, y) {
-        document.querySelectorAll('.zone').forEach(z => {
-            const rect = z.getBoundingClientRect();
-            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                z.classList.add('drag-over');
-            } else {
-                z.classList.remove('drag-over');
+        function playWrongSFX() {
+            playTone(200, 'sawtooth', 0.2, 0.2);
+            setTimeout(() => playTone(150, 'sawtooth', 0.4, 0.2), 150);
+        }
+
+        function playDropSFX() {
+            playTone(400, 'square', 0.1, 0.1);
+        }
+
+        function toggleAudio() {
+            isAudioMuted = !isAudioMuted;
+            document.getElementById('mute-btn').innerText = isAudioMuted ? '🔇' : '🔊';
+            if (!isAudioMuted && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        // --- NAVIGATION & LOGIC ---
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function goToBriefing() {
+            const name = document.getElementById('player-name').value.trim();
+            const nik = document.getElementById('player-nik').value.trim();
+            if (!name || !nik) {
+                alert("Harap masukkan Nama dan NIK Anda.");
+                return;
             }
-        });
-    }
-
-    function getDropZone(x, y) {
-        let type = null;
-        document.querySelectorAll('.zone').forEach(z => {
-            const rect = z.getBoundingClientRect();
-            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                type = z.id === 'zone-sop' ? 'sop' : 'extra';
-            }
-        });
-        return type;
-    }
-
-    // --- 6. GAME LOGIC EVALUATION ---
-    function processAnswer(selectedType) {
-        const q = questions[currentQuestionIndex];
-        const isCorrect = (selectedType === q.tipe);
-        
-        if (isCorrect) {
-            score += 10;
-            correctAnswersCount++;
-            playSFX('correct');
-            showOverlay('BENAR!', 'show-correct');
-        } else {
-            playSFX('incorrect');
-            showOverlay('SALAH!', 'show-incorrect');
+            player.name = name;
+            player.nik = nik;
+            
+            // init audio context on user interaction
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            switchScreen('screen-briefing');
         }
-        
-        document.getElementById('score').innerText = score;
 
-        // Save history for debrief
-        playerAnswers.push({
-            questionObj: q,
-            isCorrect: isCorrect,
-            userAnswerLabel: selectedType === 'sop' ? 'SOP/Impas' : 'Extra Mile (+1)',
-            correctAnswerLabel: q.tipe === 'sop' ? 'SOP/Impas' : 'Extra Mile (+1)'
-        });
-
-        // Next question delay
-        card.style.display = 'none'; // hide briefly
-        setTimeout(() => {
-            currentQuestionIndex++;
-            card.style.display = 'block';
+        function startGame() {
+            startBGM();
+            currentQuestion = 0;
+            score = 0;
+            answersData = [];
+            switchScreen('screen-game');
             loadQuestion();
-        }, 1000);
-    }
-
-    function showOverlay(text, className) {
-        const overlay = document.getElementById('feedback-overlay');
-        overlay.innerText = text;
-        overlay.className = 'feedback-overlay ' + className;
-        setTimeout(() => {
-            overlay.className = 'feedback-overlay';
-        }, 800);
-    }
-
-    // --- 7. DEBRIEF / RESULTS ---
-    function showDebrief() {
-        document.getElementById('progress-bar').style.width = '100%';
-        document.getElementById('progress-text').innerText = '100';
-        
-        switchSection('debrief');
-        
-        const finalScoreEl = document.getElementById('final-score');
-        finalScoreEl.innerText = score;
-        
-        const msgEl = document.getElementById('reinforcement-msg');
-        const badgeContainer = document.getElementById('badges-container');
-        badgeContainer.innerHTML = ''; // clear
-
-        // Positive Reinforcement Logic
-        if (score === 100) {
-            msgEl.innerText = "Sempurna! Anda memiliki insting Kintsugi sejati dalam Service Excellence.";
-            msgEl.style.color = "var(--accent-green)";
-            badgeContainer.innerHTML += `<div class="badge">🏆 Kintsugi Master</div>`;
-            badgeContainer.innerHTML += `<div class="badge">⭐ Perfect Score</div>`;
-        } else if (score >= 70) {
-            msgEl.innerText = "Kerja bagus! Insting manajerial Anda sudah baik, tingkatkan sedikit lagi sentuhan Extra Mile Anda.";
-            msgEl.style.color = "var(--primary)";
-            badgeContainer.innerHTML += `<div class="badge">🥈 Service Champion</div>`;
-        } else {
-            msgEl.innerText = "Anda masih cenderung berfokus pada penyelesaian dasar. Mari berlatih melihat peluang Kintsugi di setiap masalah.";
-            msgEl.style.color = "var(--accent-red)";
-            badgeContainer.innerHTML += `<div class="badge">🌱 Growth Mindset</div>`;
         }
 
-        // Render Answer List
-        const listContainer = document.getElementById('results-list');
-        listContainer.innerHTML = '';
-        
-        playerAnswers.forEach((ans, index) => {
-            const item = document.createElement('div');
-            item.className = `result-item neo-box ${ans.isCorrect ? 'correct' : 'incorrect'}`;
+        function loadQuestion() {
+            if (currentQuestion >= shuffledQuestions.length) {
+                endGame();
+                return;
+            }
+
+            const q = shuffledQuestions[currentQuestion];
+            document.getElementById('card-scenario').innerText = q.scenario;
+            document.getElementById('card-solution').innerText = q.solution;
             
-            item.innerHTML = `
-                <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px;">Skenario #${index+1}</div>
-                <strong>Tindakan:</strong> ${ans.questionObj.solusi}<br>
-                <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap:wrap;">
-                    <span style="background:#f1f5f9; padding:2px 8px; border-radius:4px; font-size:0.9rem;">
-                        Jawaban Anda: <strong>${ans.userAnswerLabel}</strong>
-                    </span>
-                    <span style="background:#f1f5f9; padding:2px 8px; border-radius:4px; font-size:0.9rem;">
-                        Kunci: <strong>${ans.correctAnswerLabel}</strong>
-                    </span>
-                </div>
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; font-size: 0.95rem;">
-                    💡 <strong>Insight:</strong> ${ans.questionObj.penjelasan}
-                </div>
-            `;
-            listContainer.appendChild(item);
-        });
-    }
+            // Reset position, opacity and interaction of the card
+            const card = document.getElementById('draggable-card');
+            card.style.transition = 'none';
+            card.style.opacity = '1';
+            card.style.pointerEvents = 'auto';
+            card.style.transform = 'translate(0px, 0px) rotate(0deg)';
+            
+            updateStats();
+        }
 
-    // Prevent default touch actions on draggable to stop scrolling when dragging on mobile
-    document.addEventListener('touchmove', function(e) {
-        if(isDragging) e.preventDefault();
-    }, { passive: false });
+        function updateStats() {
+            document.getElementById('score-display').innerText = score;
+            document.getElementById('progress-text').innerText = `${currentQuestion + 1}/${shuffledQuestions.length}`;
+            const percent = (currentQuestion / shuffledQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+        }
 
-</script>
+        function handleAnswer(selectedType) {
+            const q = shuffledQuestions[currentQuestion];
+            const isCorrect = selectedType === q.type;
+            
+            // Hide the question card immediately when submitted
+            const card = document.getElementById('draggable-card');
+            card.style.opacity = '0';
+            card.style.pointerEvents = 'none';
+
+            if (isCorrect) {
+                score += 100;
+                playCorrectSFX();
+                showFeedback(true, q.feedback);
+            } else {
+                playWrongSFX();
+                showFeedback(false, q.feedback);
+            }
+
+            answersData.push({
+                question: q,
+                playerAnswer: selectedType,
+                isCorrect: isCorrect
+            });
+        }
+
+        function showFeedback(isCorrect, message) {
+            const overlay = document.getElementById('feedback-overlay');
+            const title = document.getElementById('feedback-title');
+            const msg = document.getElementById('feedback-message');
+
+            overlay.style.display = 'flex';
+            if (isCorrect) {
+                title.innerText = "TEPAT SEKALI! +100";
+                title.className = "text-3xl font-bold mb-2 text-green-600";
+            } else {
+                title.innerText = "KURANG TEPAT!";
+                title.className = "text-3xl font-bold mb-2 text-red-600";
+            }
+            msg.innerText = message;
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-overlay').style.display = 'none';
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function endGame() {
+            switchScreen('screen-result');
+            document.getElementById('result-name').innerText = `${player.name} - ${player.nik}`;
+            document.getElementById('final-score').innerText = score;
+            
+            const accuracy = (score / (shuffledQuestions.length * 100)) * 100;
+            document.getElementById('final-accuracy').innerText = `${accuracy}%`;
+
+            // Badge Logic
+            const titleEl = document.getElementById('badge-title');
+            const descEl = document.getElementById('badge-desc');
+            const iconEl = document.getElementById('badge-icon');
+
+            if (accuracy === 100) {
+                iconEl.innerText = "👑";
+                titleEl.innerText = "SOP MASTER";
+                titleEl.className = "text-2xl font-bold text-white bg-green-500 border-2 border-black inline-block px-4 py-1";
+                descEl.innerText = "Luar biasa! Refleks dan pemahaman Anda tentang batas Standar vs Inisiatif sangat tajam dan sempurna.";
+            } else if (accuracy >= 70) {
+                iconEl.innerText = "⭐";
+                titleEl.innerText = "RISING STAR";
+                titleEl.className = "text-2xl font-bold text-white bg-blue-500 border-2 border-black inline-block px-4 py-1";
+                descEl.innerText = "Kerja bagus! Anda sudah memahami sebagian besar konsep Reliability, sedikit latihan lagi menuju sempurna.";
+            } else {
+                iconEl.innerText = "💪";
+                titleEl.innerText = "NEEDS WARMUP";
+                titleEl.className = "text-2xl font-bold text-white bg-pink-600 border-2 border-black inline-block px-4 py-1";
+                descEl.innerText = "Tetap semangat! Ingat, cek SOP bukan berarti kaku, tapi memastikan akurasi layanan. Mari pelajari lagi debrief di bawah ini.";
+            }
+
+            // Build Debrief List
+            const listEl = document.getElementById('feedback-list');
+            listEl.innerHTML = '';
+            
+            answersData.forEach((data, index) => {
+                const box = document.createElement('div');
+                box.className = `p-4 border-2 border-black rounded ${data.isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
+                
+                box.innerHTML = `
+                    <div class="flex items-start gap-2">
+                        <div class="text-2xl mt-1">${data.isCorrect ? '✅' : '❌'}</div>
+                        <div>
+                            <div class="font-bold text-sm mb-1">Kasus ${index + 1}: ${data.question.scenario}</div>
+                            <div class="text-xs bg-white border border-gray-400 p-2 mb-2 rounded">
+                                Solusi: <span class="font-semibold">${data.question.solution}</span>
+                            </div>
+                            <div class="text-sm">
+                                Jawaban Anda: <span class="font-bold ${data.isCorrect ? 'text-green-700' : 'text-red-700'}">${data.playerAnswer}</span>
+                                (Kunci: <span class="font-bold">${data.question.type}</span>)
+                            </div>
+                            <div class="text-xs italic text-gray-700 mt-2 bg-yellow-100 p-2 border-l-4 border-yellow-400">
+                                "${data.question.feedback}"
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listEl.appendChild(box);
+            });
+        }
+
+        // --- DRAG AND DROP LOGIC (Mouse & Touch Full Support) ---
+        const card = document.getElementById('draggable-card');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        
+        let isDragging = false;
+        let startX, startY;
+        let dragOffsetX = 0, dragOffsetY = 0;
+
+        function startDrag(e) {
+            isDragging = true;
+            // Get position for mouse or touch
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            startX = clientX;
+            startY = clientY;
+            
+            card.style.transition = 'none';
+            card.style.zIndex = '1000';
+            playDropSFX(); // tiny click sound on pickup
+        }
+
+        function onDrag(e) {
+            if (!isDragging) return;
+            e.preventDefault(); // crucial for mobile to prevent scroll while dragging
+
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            dragOffsetX = clientX - startX;
+            dragOffsetY = clientY - startY;
+
+            // Visual feedback: move and slight rotation
+            card.style.transform = `translate(${dragOffsetX}px, ${dragOffsetY}px) rotate(${dragOffsetX * 0.05}deg)`;
+
+            // Highlight drop zones if hovered
+            card.style.visibility = 'hidden'; // Hide card temporarily to get element underneath
+            const elemBelow = document.elementFromPoint(clientX, clientY);
+            card.style.visibility = 'visible';
+            
+            dropZones.forEach(z => z.classList.remove('drag-over'));
+            
+            if (elemBelow) {
+                const zone = elemBelow.closest('.drop-zone');
+                if (zone) zone.classList.add('drag-over');
+            }
+        }
+
+        function endDrag(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.changedTouches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.changedTouches[0].clientY;
+
+            card.style.visibility = 'hidden';
+            const elemBelow = document.elementFromPoint(clientX, clientY);
+            card.style.visibility = 'visible';
+
+            dropZones.forEach(z => z.classList.remove('drag-over'));
+
+            let validDrop = false;
+            if (elemBelow) {
+                const zone = elemBelow.closest('.drop-zone');
+                if (zone) {
+                    validDrop = true;
+                    const answerType = zone.getAttribute('data-type');
+                    handleAnswer(answerType);
+                }
+            }
+
+            if (!validDrop) {
+                // Snap back
+                card.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                card.style.transform = 'translate(0px, 0px) rotate(0deg)';
+                playDropSFX(); // tiny sound on snapback
+            }
+        }
+
+        // Attach event listeners for Draggable Card
+        card.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', onDrag, { passive: false });
+        document.addEventListener('mouseup', endDrag);
+
+        card.addEventListener('touchstart', startDrag, { passive: false });
+        document.addEventListener('touchmove', onDrag, { passive: false });
+        document.addEventListener('touchend', endDrag);
+
+    </script>
 </body>
 </html>
